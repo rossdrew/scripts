@@ -5,7 +5,7 @@
 FOR /F "usebackq tokens=3 delims=," %%a IN (`getmac /fo csv /v ^| find "Wi-Fi"`) DO ^
 SET MAC=%%~a
 
-ECHO ####### Roxoft MAC PC Rename v0.02 ['%MAC%'] #######
+ECHO ####### Roxoft MAC PC Rename v1.0 ['%MAC%'] #######
 
 ECHO Local MAC : %MAC%
 
