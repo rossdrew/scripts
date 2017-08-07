@@ -1,57 +1,34 @@
-
 @ECHO OFF
 
 ::Get our own MAC address, need to search for one of two...
 ::Find Options: "Local Area Connection" || "Wi-Fi"
-FOR /F "usebackq tokens=3 delims=," %%a IN (`getmac /fo csv /v ^| find "Wi-Fi"`) DO SET MAC=%%~a
+FOR /F "usebackq tokens=3 delims=," %%a IN (`getmac /fo csv /v ^| find "Wi-Fi"`) DO ^
+SET MAC=%%~a
 
-ECHO ####### Roxoft MAC Renamer v0.1 (%MAC%) #######
+ECHO ####### Roxoft MAC PC Rename v0.02 ['%MAC%'] #######
 
-SETLOCAL ENABLEDELAYEDEXPANSION
+ECHO Local MAC : %MAC%
 
 ::Get the filename argument
 IF "%~1"=="" GOTO :EOF
 SET "filename=%~1"
+FOR /F "tokens=* delims= " %%a IN ('%filename%') DO SET "filename=%%a"
 
-::Start to process the file
-SET fcount=0
-SET linenum=0
-FOR /F "usebackq tokens=1-10 delims=," %%a IN ("%filename%") DO ^
-CALL :process "%%a" "%%b" "%%c" "%%d" "%%e" "%%f" "%%g" "%%h" "%%i" "%%j"
-GOTO :EOF
+ECHO Definition File : %filename%
 
-:trim
-SET "tmp=%~1"
-:trimlead
-IF NOT "%tmp:~0,1%"==" " GOTO :EOF
-SET "tmp=%tmp:~1%"
-GOTO trimlead
+::For each line in the file (skipping the header)
+FOR /F "usebackq tokens=1-2 skip=1 delims=," %%a IN ("%filename%") DO ^
+CALL :process-line "%%a" "%%b" 
+GOTO EOF
 
-::Process a line in the file
-:process
-SET /A linenum+=1
-IF "%linenum%"=="1" GOTO picknames
-::If it's not the header line...
-SET index=0
-:perform-action
-IF "%fcount%"=="%index%" (ECHO.&GOTO :EOF)
-SET /A index+=1
-CALL :trim %1
-SETLOCAL ENABLEDELAYEDEXPANSION
-::Outputs the currently searched key-value pair
-ECHO !f%index%! = !tmp!
-::This is the actual compare of MAC address and execution of a command based on it
-::This needs to use the name, not the max address
-IF %MAC% == !tmp! (ECHO Running 'compname /c !tmp!') 
-ENDLOCAL
-SHIFT
-GOTO perform-action
-
-::Extract the header names
-:picknames
-IF %1=="" GOTO :EOF
-CALL :trim %1
-SET /a fcount+=1
-SET "f%fcount%=%tmp%"
-SHIFT
-GOTO picknames
+::Process a line of the file
+:process-line
+::If this line matches our MAC, we're in business
+IF %1 == "%MAC%" (
+	ECHO  - %1 found in definitions, setting Computername to %2
+	::This is where the actual command goes.  (%1 is MAC entry in file, %2 is Name, %MAC% is the local MAC Address)
+	ECHO Run the command 'compname /c %2'
+)
+	
+::Exit point
+:EOF
