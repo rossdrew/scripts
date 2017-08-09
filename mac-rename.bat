@@ -27,7 +27,15 @@ GOTO EOF
 IF %1 == "%MAC%" (
 	ECHO  - %1 found in definitions, setting Computername to %2
 	::This is where the actual command goes.  (%1 is MAC entry in file, %2 is Name, %MAC% is the local MAC Address)
-	ECHO Run the command 'compname /c %2'
+	ECHO Run the command...
+	::Example command
+	::ECHO  - %1 found in definitions, setting Computername to %2
+	::ECHO+
+	::WMIC computersystem where caption="%computername%" call rename name='%2'
+	::ECHO+
+	::ECHO This PC WIll restart in 15 seconds
+	::timeout /t 15
+	::shutdown /r /t 0
 )
 	
 ::Exit point
