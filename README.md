@@ -19,3 +19,5 @@ If run on the computer with the MAC address `00-00-00-00-00-01`, the name of tha
 ### MiFARE Conversion
 
 Take a MiFARE RFID, decimalises, removes digits for one and then reverses the number and does the same for the other.  Command line and RESTful versions.
+
+i.e. `56291629` ->	`29162956` ->	`689318230`, `1445533225` -> `45533225` ->	`0#45533225`
