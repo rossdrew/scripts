@@ -15,3 +15,7 @@ MAC-Address,Name
 ```
 
 If run on the computer with the MAC address `00-00-00-00-00-01`, the name of that computer will be set to `PC-1` using the Compname.exe
+
+### MiFARE Conversion
+
+Take a MiFARE RFID, decimalises, removes digits for one and then reverses the number and does the same for the other.  Command line and RESTful versions.
