@@ -1,9 +1,13 @@
-
 #!/usr/bin/python
+
+import sys 
+
+# Arguments passed 
+print ("Converting: '" + sys.argv[1] + "'") 
 
 # It takes the MiFARE RFID and decimalises and removes digits for one and then reverses the number and does the same for the other.
 
-sample = "56291629"
+sample = sys.argv[1]
 reordered = "".join(list(reversed([sample[i:i+2] for i in range(0, len(sample), 2)])))
 decimalA = int(reordered, 16)
 decimalB = int(sample, 16)
