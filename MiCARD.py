@@ -14,9 +14,9 @@ decimalB = int(sample, 16)
 subset = str(decimalB)[2:]
 hashed_subset = "#" + str(decimalB)[2:]
 
-print (sample)
-print (reordered)
-print (decimalA)
-print (decimalB)
-print (subset)
-print (hashed_subset)
+print ("A" + sample)
+print ("B" + reordered)
+print ("C" + decimalA)
+print ("D" + decimalB)
+print ("E" + subset)
+print ("F" + hashed_subset)
